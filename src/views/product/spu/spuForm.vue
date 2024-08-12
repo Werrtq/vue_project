@@ -45,44 +45,48 @@
             </el-form-item>
             <el-form-item label = "SPU销售属性">
                 <el-select
-                    v-model="selectValue"
-                    :placeholder="`还未选择${saleAttrList.length - spuParams.spuSaleAttrList.length}个`"
+                    v-model="saleAttrSelectIdAndValue"
+                    :placeholder="unSelectValue.length === 0 ? '无' : `还未选择${unSelectValue.length}个`"
                     size="large"
                     style="width: 240px"
                     >
                     <el-option
-                        v-for="item in saleAttrList"
+                        v-for="item in unSelectValue"
                         :key="item.id"
                         :label="item.name"
-                        :value="item.id"
+                        :value="`${item.id}:${item.name}`"
                     />
                     </el-select>
-                    <el-button type = 'primary' icon = "Plus" style = "margin-left: 10px;">添加销售属性值</el-button>
+                    <el-button :disabled = "unSelectValue.length === 0" 
+                        @click = "addSaleAttr"
+                        type = 'primary' icon = "Plus" style = "margin-left: 10px;"
+                        >添加销售属性值
+                    </el-button>
                     <el-table :data = 'spuParams.spuSaleAttrList' border>
                         <el-table-column label = '序号' type = "index"></el-table-column>
                         <el-table-column label = '销售属性名字' prop = 'saleAttrName'></el-table-column>
                         <el-table-column label = '销售属性值'>
                             <template # = "{row, $index}">
                                 <el-tag
-                                    v-for="tag in row.spuSaleAttrValueList"
+                                    v-for="(tag, index) in row.spuSaleAttrValueList"
                                     :key="tag"
                                     closable
                                     :disable-transitions="false"
-                                    @close="handleClose(tag)"
+                                    @close="row.spuSaleAttrValueList.splice(index, 1)"
                                     style = "margin: 0px 10px;"
                                     >
                                     {{ tag.saleAttrValueName }}
                                 </el-tag>
                                 <el-input
-                                    v-if="inputVisible"
+                                    v-if="tagInputVisible"
                                     ref="InputRef"
                                     v-model="inputValue"
                                     class="w-20"
                                     size="small"
-                                    @keyup.enter="handleInputConfirm"
-                                    @blur="handleInputConfirm"
+                                    @keyup.enter="handleTagInputConfirm(row)"
+                                    @blur="handleTagInputConfirm(row)"
                                     />
-                                <el-button v-else class="button-new-tag" size="small" type = "primary" icon = "Plus" @click="showInput">
+                                <el-button v-else class="button-new-tag" size="small" type = "primary" icon = "Plus" @click="showTagInput">
                                 </el-button>
                             </template>
                         </el-table-column>
@@ -100,7 +104,7 @@
 </template>
 
 <script setup lang = 'ts'>
-    import { ref, onMounted } from 'vue';
+    import { ref, onMounted, computed } from 'vue';
     import { reqGetTrademarkList, reqGetSpuDataById, reqGetAllSaleAttrList } from '../../../api/product/spu';
     import type { trademarkList, spuRecord, spuImageList, saleAttrList } from '@/api/product/spu/type'
     import { ElMessage, UploadFile, UploadRawFile } from 'element-plus';
@@ -108,6 +112,7 @@
     let trademarkList = ref<trademarkList>([]);
     let imgList = ref<spuImageList>([]);
     let saleAttrList = ref<saleAttrList>([]);
+    let saleAttrSelectIdAndValue = ref('');
     let dialogVisible = ref(false);
     let dialogImageUrl = ref('');
     let spuParams = ref<spuRecord>({     
@@ -129,28 +134,25 @@
         let result = await reqGetSpuDataById(row.id);
         if(result.code == 200){
             spuParams.value = result.data;
+            console.log(spuParams.value.spuSaleAttrList);
             imgList.value = spuParams.value.spuImageList.map(item => {
                 return {
                     name: item.imgName,
                     url: item.imgUrl
                 }
             });
-            console.log(spuParams.value);
         }
 
         let result1 = await reqGetAllSaleAttrList();
         saleAttrList.value = result1.data;
-        console.log(saleAttrList.value)
     }
 
     const previewPicture = (UploadFile: UploadFile) => {
         dialogVisible.value = true;
         dialogImageUrl.value = (UploadFile.url as string);
-        console.log(UploadFile);
     }
 
     const beforeImgUpload = (rawFile: UploadRawFile) => {
-        console.log(rawFile);
         if(rawFile.type == 'image/png' || rawFile.type == 'image/jpg' || rawFile.type == 'image/gif'){
             if(rawFile.size / 1024 / 1024 <= 4){
                 return true;
@@ -170,9 +172,41 @@
         }
     }
 
+    const unSelectValue = computed(() => {
+        return saleAttrList.value.filter((item) => {
+            return spuParams.value.spuSaleAttrList.every((item1) => {
+                return item.name != item1.saleAttrName;
+            })
+        })
+    })
+
+    const addSaleAttr = () => {
+        let [baseSaleAttrId, saleAttrName] = saleAttrSelectIdAndValue.value.split(':');
+        let newSaleAttr = {
+            saleAttrName,
+            baseSaleAttrId,
+            spuSaleAttrValueList: []
+        }
+        spuParams.value.spuSaleAttrList.push(newSaleAttr);
+        saleAttrSelectIdAndValue.value = '';
+    }
+
     onMounted(() => {
         setTrademarkList();
     })
+
+    //tag
+    let tagInputVisible = ref(false);
+    let newTag = ref()
+
+    const showTagInput = () => {
+        tagInputVisible.value = true;
+    }
+
+    const handleTagInputConfirm = (row) => {
+        tagInputVisible.value = false;
+        console.log(row)
+    }
 
     defineExpose({
         prepareSpuFormData,
