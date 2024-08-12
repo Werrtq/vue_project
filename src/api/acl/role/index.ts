@@ -1,8 +1,29 @@
 import request from '@/utils/request';
-import { ResponseBody } from './type';
+import { ResponseBody, RequestBodyAddRole, permissionData } from './type';
 
 enum API{
     GETROLELIST_URL = '/admin/acl/role/',
+    ADDROLE_URL = '/admin/acl/role/save',
+    UPDATEROLE_URL = '/admin/acl/role/update',
+    DELETEROLE_URL = '/admin/acl/role/remove/',
+    GETPERMISSION_URL = '/admin/acl/permission/toAssign/',
+    AGGIGNPERMISSION_URL = '/admin/acl/permission/doAssign/?'
 }
 
-export const reqGetRoleList = (pageNo: number, pageLimit: number) => request.get<any, ResponseBody>(API.GETROLELIST_URL+`${pageNo}/${pageLimit}`)
+export const reqGetRoleList = (pageNo: number, pageLimit: number, keyword: string) => request.get<any, ResponseBody>(API.GETROLELIST_URL+`${pageNo}/${pageLimit}?roleName=${keyword}`)
+
+export const reqAddOrUpdateRole = (roleData: RequestBodyAddRole) => {
+    if(roleData.id === 0){
+        return  request.post(API.ADDROLE_URL, roleData);
+    } else {
+        return  request.put(API.UPDATEROLE_URL, roleData);
+    }
+
+}
+
+export const reqDeleteRole = (roleId: number) => request.delete<any, any>(API.DELETEROLE_URL+`${roleId}`)
+//export const reqAddRole = (roleData: RequestBodyAddRole) => request.post(API.ADDROLE_URL, roleData)
+
+export const reqGetRolePermission = (roleId: number) => request.get<any, permissionData>(API.GETPERMISSION_URL +  `${roleId}`)
+
+export const reqPostRolePermission = (roleId: number, permissionList: number[]) => request.post<any, any>(API.AGGIGNPERMISSION_URL+`roleId=${roleId}&permissionId=${permissionList}`)

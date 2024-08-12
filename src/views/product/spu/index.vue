@@ -11,7 +11,7 @@
                 <el-table-column label = "SPU操作">
                     <template # = "{row, $index}">
                         <el-button type = "primary" size = "small" icon = "Plus"></el-button>
-                        <el-button type = "primary" size = "small" icon = "Edit"  @click = "updateSpu"></el-button>
+                        <el-button type = "primary" size = "small" icon = "Edit"  @click = "updateSpu(row)"></el-button>
                         <el-button type = "primary" size = "small" icon = "view"></el-button>
                         <el-button type = "primary" size = "small" icon = "Delete"></el-button>
                     </template>
@@ -27,7 +27,7 @@
                 @size-change = "sizeChange"
                 />
             </div>
-            <spuForm v-show = "scene == 1" @turnScene0 = "scene = 0"></spuForm>
+            <spuForm ref = "spuRef" v-show = "scene == 1" @turnScene0 = "scene = 0"></spuForm>
             <skuForm v-show = "scene == 2"></skuForm>
         </el-card>
     </div>
@@ -37,7 +37,7 @@
     import { ref, watch } from 'vue';
     import { useCategoryStore } from '../../../store/modules/category';
     import { reqGetUrl } from '../../../api/product/spu';
-    import { spuRecords } from '../../../api/product/spu/type';
+    import { spuRecords, spuRecord } from '../../../api/product/spu/type';
     import spuForm from './spuForm.vue';
     import skuForm from './skuForm.vue';
     
@@ -70,11 +70,15 @@
         getSpuData();
     }
 
+    //SPU
+    let spuRef = ref();
+
     const addSpu = () => {
         scene.value = 1;
     }
 
-    const updateSpu = () => {
+    const updateSpu = (row: spuRecord) => {
         scene.value = 1;
+        spuRef.value.prepareSpuFormData(row);
     }
 </script>
