@@ -1,5 +1,5 @@
 import request from "../../../utils/request";
-import { spuListResponseBody, trademarkListResponseBody, spuDataResponseBody, allSaleAttrListResponseBody } from "./type";
+import { spuListResponseBody, trademarkListResponseBody, spuDataResponseBody, allSaleAttrListResponseBody, attrListResponseBody } from "./type";
 
 enum API {
     GETSPULIST_URL = '/admin/product/',
@@ -8,7 +8,8 @@ enum API {
     GETALLSALEATTRLIST = '/admin/product/baseSaleAttrList',
     UPDATESPU_URL = '/admin/product/updateSpuInfo',
     ADDSPU_URL = '/admin/product/saveSpuInfo',
-    DELETESPU_URL = '/admin/product/deleteSpu/'
+    DELETESPU_URL = '/admin/product/deleteSpu/',
+    GETATTRLIST_URL = '/admin/product/attrInfoList/' //平台属性
 }
 
 export const reqGetUrl = (pageNo: number, limit: number, category3Id: number | string) => request.get<any, spuListResponseBody>(API.GETSPULIST_URL + `${pageNo}/${limit}/?category3Id=${category3Id}`)
@@ -28,5 +29,7 @@ export const reqUpdateOrAddSpu = (spuBody: spuDataResponseBody) => {
 }
 
 export const reqDeleteSpu = (spuId: number) => request.delete<any, any>(API.DELETESPU_URL+spuId)
+
+export const reqGetAttrList = (id1: number, id2: number, id3: number) => request.get<any, attrListResponseBody>(API.GETATTRLIST_URL + id1 + '/' + id2 + '/' + id3)
 
 //export const reqUpdateSpu = (spuBody: spuDataResponseBody) => request.post<any, any>(API.UPDATESPU_URL, spuBody)

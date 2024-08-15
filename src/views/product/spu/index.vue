@@ -10,7 +10,7 @@
                 <el-table-column label = "SPU描述" prop = "description"></el-table-column>
                 <el-table-column label = "SPU操作">
                     <template # = "{row, $index}">
-                        <el-button type = "primary" size = "small" icon = "Plus" @click = "addSku"></el-button>
+                        <el-button type = "primary" size = "small" icon = "Plus" @click = "addSku(row)"></el-button>
                         <el-button type = "primary" size = "small" icon = "Edit"  @click = "updateSpu(row)"></el-button>
                         <el-button type = "primary" size = "small" icon = "view"></el-button>
                         <el-button type = "primary" size = "small" icon = "Delete" @click = "deleteSpu(row.id)"></el-button>
@@ -28,7 +28,7 @@
                 />
             </div>
             <spuForm ref = "spuRef" v-show = "scene == 1" @turnScene0 = "turnScene0"></spuForm>
-            <skuForm v-show = "scene == 2"></skuForm>
+            <skuForm ref = "skuRef" v-show = "scene == 2"></skuForm>
         </el-card>
     </div>
 </template>
@@ -111,8 +111,12 @@
     }
 
     //SKU
-    const addSku = () => {
+    let skuRef = ref();
+
+    const addSku = (row: spuRecord) => {
         scene.value = 2;
+        console.log(row);
+        skuRef.value.initSkuData(categoryStore.valueC1, categoryStore.valueC2, row);
     }
 
     onBeforeUnmount(() => {

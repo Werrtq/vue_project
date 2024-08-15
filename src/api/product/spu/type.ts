@@ -116,3 +116,26 @@ export type saleAttrList = saleAttr[]
 export interface allSaleAttrListResponseBody extends ResponseData {
     data: saleAttrList
 }
+
+//添加SKU
+export type attrValue = {
+    id?: number,
+    valueName: string,
+    attrId?: number,
+}
+
+export type attrValueList = attrValue[]
+
+export type attr = {
+    id?: number,
+    attrName: string,
+    categoryId: number,
+    categoryLevel: number,
+    attrValueList: attrValueList
+}
+
+export type attrList = attr[]
+
+export interface attrListResponseBody extends ResponseData {
+    data: attrList
+}
