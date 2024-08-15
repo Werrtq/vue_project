@@ -28,7 +28,7 @@
                 />
             </div>
             <spuForm ref = "spuRef" v-show = "scene == 1" @turnScene0 = "turnScene0"></spuForm>
-            <skuForm ref = "skuRef" v-show = "scene == 2"></skuForm>
+            <skuForm ref = "skuRef" v-show = "scene == 2" @turnScene0 = "turnScene0"></skuForm>
         </el-card>
     </div>
 </template>

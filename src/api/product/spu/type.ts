@@ -139,3 +139,51 @@ export type attrList = attr[]
 export interface attrListResponseBody extends ResponseData {
     data: attrList
 }
+
+//SKU
+export interface spuSaleAttrListResponseBody extends ResponseData {
+    data: spuSaleAttrList
+}
+
+export interface spuImageListResponseBody extends ResponseData {
+    data: spuImageList
+}
+
+export type skuAttrValue = {
+    "attrId": number,
+    "valueId": number
+}
+
+export type skuAttrValueList = skuAttrValue[]
+
+export type skuSaleAttrValue = {
+    "saleAttrId": number,
+    "saleAttrValueId": number
+}
+
+export type skuSaleAttrValueList = skuSaleAttrValue[]
+
+export interface skuDataRequestBody {
+    "category3Id": number | string,
+    "spuId": number | string,
+    "tmId": number | string,
+    "skuName": string,
+    "price": number | string,
+    "weight": string,
+    "skuDesc": string,
+    "skuDefaultImg": string,
+    "skuAttrValueList": skuAttrValueList,
+    "skuSaleAttrValueList": skuSaleAttrValueList,
+}
+
+
+// export type skuAttrValue = {
+//     "attrId": number,
+//     "attrName": string,
+//     "createTime"?: string,
+//     "id": number,
+//     "skuId": number,
+//     "updateTime"?: string,
+//     "valueId": number,
+//     "valueName": string
+// }

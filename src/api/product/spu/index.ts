@@ -1,5 +1,7 @@
 import request from "../../../utils/request";
-import { spuListResponseBody, trademarkListResponseBody, spuDataResponseBody, allSaleAttrListResponseBody, attrListResponseBody } from "./type";
+import { spuListResponseBody, trademarkListResponseBody, spuDataResponseBody, 
+         allSaleAttrListResponseBody, attrListResponseBody, spuSaleAttrListResponseBody,
+         spuImageListResponseBody, skuDataRequestBody } from "./type";
 
 enum API {
     GETSPULIST_URL = '/admin/product/',
@@ -9,7 +11,10 @@ enum API {
     UPDATESPU_URL = '/admin/product/updateSpuInfo',
     ADDSPU_URL = '/admin/product/saveSpuInfo',
     DELETESPU_URL = '/admin/product/deleteSpu/',
-    GETATTRLIST_URL = '/admin/product/attrInfoList/' //平台属性
+    GETATTRLIST_URL = '/admin/product/attrInfoList/', //平台属性
+    GETSALEATTRLIST_URL = '/admin/product/spuSaleAttrList/',
+    GETSPUIMAGELIST_URL = '/admin/product/spuImageList/',
+    SAVESKUINFO_URL = '/admin/product/saveSkuInfo'
 }
 
 export const reqGetUrl = (pageNo: number, limit: number, category3Id: number | string) => request.get<any, spuListResponseBody>(API.GETSPULIST_URL + `${pageNo}/${limit}/?category3Id=${category3Id}`)
@@ -32,4 +37,9 @@ export const reqDeleteSpu = (spuId: number) => request.delete<any, any>(API.DELE
 
 export const reqGetAttrList = (id1: number, id2: number, id3: number) => request.get<any, attrListResponseBody>(API.GETATTRLIST_URL + id1 + '/' + id2 + '/' + id3)
 
+export const reqGetSaleAttrList = (spuId: number) => request.get<any, spuSaleAttrListResponseBody>(API.GETSALEATTRLIST_URL + spuId)
+
+export const reqGetSpuImageList = (spuId: number) => request.get<any, spuImageListResponseBody>(API.GETSPUIMAGELIST_URL + spuId)
+
+export const reqSaveSkuInfo = (skuData: skuDataRequestBody) => request.post<any,any>(API.SAVESKUINFO_URL, skuData)
 //export const reqUpdateSpu = (spuBody: spuDataResponseBody) => request.post<any, any>(API.UPDATESPU_URL, spuBody)
