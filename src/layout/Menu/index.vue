@@ -38,9 +38,8 @@
 </template>
 
 <script setup lang = "ts">
-    defineProps(['menuList']);
-
     import { useRouter } from 'vue-router';
+    defineProps(['menuList']);
     let router = useRouter();
 
     const goRoute = (a:any) => {

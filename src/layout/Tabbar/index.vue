@@ -39,7 +39,6 @@
 <script lang = "ts" setup>
     import { ArrowRight, Refresh, Setting, FullScreen } from '@element-plus/icons-vue';
     import { useLayOutSettingStore } from '../../store/modules/setting';
-    import { nextTick } from 'vue';
     import useUserStore from '../../store/modules/user';
     import { useRouter, useRoute } from 'vue-router';
     let $router = useRouter();

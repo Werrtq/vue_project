@@ -55,7 +55,7 @@
 </template>
 
 <script lang = "ts" setup>
-    import { watch, ref, reactive, nextTick } from 'vue';
+    import { watch, ref, reactive, nextTick, onBeforeUnmount } from 'vue';
     import { useCategoryStore } from '../../../store/modules/category';
     import { attrData, attrValueData } from '../../../api/product/attr/type';
     import { reqDeleteAttr, reqSaveAttr } from '../../../api/product/attr';
@@ -180,4 +180,8 @@
             });
         }
     }
+
+    onBeforeUnmount(() => {
+        categoryStore.$reset();
+    })
 </script>

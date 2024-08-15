@@ -66,7 +66,7 @@
     height: $base-tabber-height;
     top: 0;
     left: $base-menu-width;
-    background-color: yellow;
+    background-color: white;
     transition: all 0.3s;
 
     &.fold{
