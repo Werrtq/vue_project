@@ -30,7 +30,7 @@
             <el-form-item label = "销售属性">
                 <el-form>
                     <el-form-item v-for = "item in saleAttrList" :key = "item.id" :label = "item.saleAttrName">
-                        <el-select v-model="item.saleIdAndValueId" style = "width: 200px;">
+                        <el-select v-model= "item.saleIdAndValueId" style = "width: 200px;">
                             <el-option v-for = "item1 in item.spuSaleAttrValueList"
                                         :key = "item1.id"
                                         :label = "item1.saleAttrValueName"

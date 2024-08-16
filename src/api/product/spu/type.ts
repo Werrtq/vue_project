@@ -176,6 +176,24 @@ export interface skuDataRequestBody {
     "skuSaleAttrValueList": skuSaleAttrValueList,
 }
 
+export type skuData = {
+    "id": number,
+    "spuId": number,
+    "price": number,
+    "skuName": string,
+    "skuDesc": string,
+    "weight": string,
+    "tmId": number,
+    "category3Id": number,
+    "skuDefaultImg": string,
+    "isSale": number,
+}
+
+export type skuDatas = skuData[]
+
+export interface skuDataResponseBody extends ResponseData {
+    data: skuDatas
+}
 
 // export type skuAttrValue = {
 //     "attrId": number,

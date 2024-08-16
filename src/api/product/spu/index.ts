@@ -1,7 +1,7 @@
 import request from "../../../utils/request";
 import { spuListResponseBody, trademarkListResponseBody, spuDataResponseBody, 
          allSaleAttrListResponseBody, attrListResponseBody, spuSaleAttrListResponseBody,
-         spuImageListResponseBody, skuDataRequestBody } from "./type";
+         spuImageListResponseBody, skuDataRequestBody, skuDataResponseBody } from "./type";
 
 enum API {
     GETSPULIST_URL = '/admin/product/',
@@ -14,7 +14,8 @@ enum API {
     GETATTRLIST_URL = '/admin/product/attrInfoList/', //平台属性
     GETSALEATTRLIST_URL = '/admin/product/spuSaleAttrList/',
     GETSPUIMAGELIST_URL = '/admin/product/spuImageList/',
-    SAVESKUINFO_URL = '/admin/product/saveSkuInfo'
+    SAVESKUINFO_URL = '/admin/product/saveSkuInfo',
+    GETSKULIST_URL = '/admin/product/findBySpuId/'
 }
 
 export const reqGetUrl = (pageNo: number, limit: number, category3Id: number | string) => request.get<any, spuListResponseBody>(API.GETSPULIST_URL + `${pageNo}/${limit}/?category3Id=${category3Id}`)
@@ -42,4 +43,6 @@ export const reqGetSaleAttrList = (spuId: number) => request.get<any, spuSaleAtt
 export const reqGetSpuImageList = (spuId: number) => request.get<any, spuImageListResponseBody>(API.GETSPUIMAGELIST_URL + spuId)
 
 export const reqSaveSkuInfo = (skuData: skuDataRequestBody) => request.post<any,any>(API.SAVESKUINFO_URL, skuData)
+
+export const reqGetSkuList = (spuId: number) => request.get<any, skuDataResponseBody>(API.GETSKULIST_URL+spuId);
 //export const reqUpdateSpu = (spuBody: spuDataResponseBody) => request.post<any, any>(API.UPDATESPU_URL, spuBody)
