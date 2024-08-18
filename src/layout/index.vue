@@ -44,7 +44,6 @@
 }
 
 .layout_container{
-    background-color: white;
     width: 100%;
     height: 100vh;
 }
@@ -66,7 +65,6 @@
     height: $base-tabber-height;
     top: 0;
     left: $base-menu-width;
-    background-color: white;
     transition: all 0.3s;
 
     &.fold{

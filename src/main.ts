@@ -4,6 +4,7 @@ import 'element-plus/dist/index.css'
 import App from '@/App.vue'
 import router from './router';
 import pinia from './store';
+import 'element-plus/theme-chalk/dark/css-vars.css'
 
 import 'virtual:svg-icons-register'
 //import SvgIcon from './components/SvgIcon/index.vue'

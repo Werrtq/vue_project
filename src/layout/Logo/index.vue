@@ -1,12 +1,15 @@
 <template>
     <div class = "logo">
         <img :src = "LogoData.logoSrc" />
-        <p>{{LogoData.title}}</p>
+        <p v-show = "!layoutSettingStore.fold">{{LogoData.title}}</p>
     </div>
 </template>
 
 <script setup lang = "ts">
     import LogoData from '../../setting';
+    import { useLayOutSettingStore } from '@/store/modules/setting'
+
+    let layoutSettingStore = useLayOutSettingStore();
 </script>
 
 <script lang = "ts">
