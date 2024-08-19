@@ -19,7 +19,7 @@
             <el-table-column label='创建时间' prop="createTime"></el-table-column>
             <el-table-column label='更新时间' prop="updateTime"></el-table-column>
             <el-table-column label='操作' width="280px">
-                <template #="{ row, $index }">
+                <template #="{ row }">
                     <el-button type='primary' size='small' icon='User' @click = "assignPermission(row)">分配权限</el-button>
                     <el-button type='primary' size='small' icon='Edit' @click="editRole(row)">编辑</el-button>
                     <el-popconfirm title="你确定删除这个？" @confirm="confirmDelete(row)">
@@ -70,14 +70,14 @@
 <script lang='ts' setup>
 import { ref, onMounted, reactive } from 'vue';
 import { reqAddOrUpdateRole, reqDeleteRole, reqGetRoleList, reqGetRolePermission, reqPostRolePermission } from '../../../api/acl/role';
-import type { roleRecord, ResponsePermissionBody } from '@/api/acl/role/type'
+import type { roleRecord, permissionDataList } from '@/api/acl/role/type'
 import { ElMessage } from 'element-plus';
 
 //基础页面11
 let pageNo = ref(1);
 let pageSize = ref(5);
 let total = ref(0);
-let roleList = ref([]);
+let roleList = ref<any>([]);
 
 const getRoleListData = async () => {
     let result = await reqGetRoleList(pageNo.value, pageSize.value, keyword.value);
@@ -183,7 +183,7 @@ const refresh = () => {
 //分配权限
 //55
 let treeDrawer = ref(false);
-let treeDataArr = ref<ResponsePermissionBody>([]);
+let treeDataArr = ref<permissionDataList>([]);
 let treeSelectedIdArr = ref<number[]>([]);
 let treeRef = ref<any>();
 
@@ -197,7 +197,7 @@ const assignPermission = async (row: roleRecord) => {
     }
 }
 
-const findSelectedArr = (allArr: ResponsePermissionBody, selectedArr: number[]) => {
+const findSelectedArr = (allArr: permissionDataList, selectedArr: number[]) => {
     for(let item of allArr){
         if(item.children.length == 0){
             if(item.select == true){

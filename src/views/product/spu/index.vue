@@ -9,7 +9,7 @@
                 <el-table-column label = "SPU名称" prop = "spuName"></el-table-column>
                 <el-table-column label = "SPU描述" prop = "description"></el-table-column>
                 <el-table-column label = "SPU操作">
-                    <template # = "{row, $index}">
+                    <template # = "{row}">
                         <el-button type = "primary" size = "small" icon = "Plus" @click = "addSku(row)"></el-button>
                         <el-button type = "primary" size = "small" icon = "Edit"  @click = "updateSpu(row)"></el-button>
                         <el-button type = "primary" size = "small" icon = "View" @click = "viewSku(row)"></el-button>
@@ -37,7 +37,7 @@
             <el-table-column property="price" label="SKU价格" />
             <el-table-column property="weight" label="SKU重量" />
             <el-table-column label="SKU图片">
-                <template # = "{row, $index}">
+                <template # = "{row}">
                     <img :src="row.skuDefaultImg" alt="" width="100px" height="100px">
                 </template>
             </el-table-column>
@@ -136,7 +136,7 @@
     let dialogTableVisible = ref(false);
     let skuList = ref<any>([]);
 
-    const viewSku = async (row) => {
+    const viewSku = async (row: any) => {
         dialogTableVisible.value = true;
         let result = await reqGetSkuList(row.id);
         if(result.code == 200){

@@ -18,5 +18,5 @@ const app = createApp(App)
         app.use(router)
         app.use(pinia)
         app.use(gloalComponents)
-        import './permission.ts'
+        import './permission'
         app.mount('#app')

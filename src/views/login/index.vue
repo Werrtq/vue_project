@@ -31,7 +31,6 @@ import { ElNotification } from 'element-plus';
 
 const form = ref();
 
-let asd = "<span style=\"color: red\">This should be red.</span>";
 let loading = ref(false);
 let userData = reactive({ username: 'admin', password: '111111' });
 let useStore = useUserStore();
@@ -39,7 +38,6 @@ let $router = useRouter();
 let $route = useRoute();
 const login = async function () {
     await form.value.validate();
-    console.log(123);
     loading.value = true;
     let date = new Date();
     let hour = date.getHours();
@@ -52,9 +50,9 @@ const login = async function () {
         msg = "Hi，晚上好";
     }
     useStore.userLogin(userData).then(
-        (re) => {
-            let redirect = $route.query.redirect;
-            $router.push({path: redirect||'/'});
+        () => {
+            let redirect: any = $route.query.redirect;
+            $router.push({path: redirect || '/'});
             ElNotification({
                 type: "success",
                 message: msg

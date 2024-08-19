@@ -9,7 +9,7 @@
         <el-table-column prop="code" label="权限值" />
         <el-table-column prop="updateTime" label="修改时间" />
         <el-table-column label="操作">
-            <template # = "{row, $index}">
+            <template # = "{row}">
                 <el-button type = "primary" size = "small" :disabled = "row.level == 4" @click = "add(row)">添加{{row.level == 3 ? '功能' : '菜单'}}</el-button>
                 <el-button type = "primary" size = "small" :disabled = "row.level == 1" @click = "edit(row)">编辑</el-button>
                 <el-popconfirm title="确定删除?" @confirm = "confirmDelete(row)">

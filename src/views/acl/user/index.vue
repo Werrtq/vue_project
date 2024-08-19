@@ -191,7 +191,7 @@
         table.value = false;
     }
 
-    function validatorUsername(rule: any, value: any, callback: any){
+    function validatorUsername(_rule: any, value: any, callback: any){
         if(value.trim().length >= 5){
             callback();
         } else {
@@ -199,7 +199,7 @@
         }
     }
 
-    function validatorName(rule: any, value: any, callback: any){
+    function validatorName(_rule: any, value: any, callback: any){
         if(value.trim().length >= 5){
             callback();
         } else {
@@ -207,7 +207,7 @@
         }
     }
 
-    function validatorPassword(rule: any, value: any, callback: any){
+    function validatorPassword(_rule: any, value: any, callback: any){
         if(value.trim().length >= 6){
             callback();
         } else {

@@ -5,13 +5,13 @@ export interface ResponseData {
 }
 
 export interface spuRecord {
-    category3Id: number,
+    category3Id: number | string,
     description: string,
-    id: number,
-    spuImageList: null,
+    id: number | string,
+    spuImageList: any,
     spuName: string,
-    spuSaleAttrList: null,
-    tmId: number,
+    spuSaleAttrList: any,
+    tmId: number | string,
 }
 
 export type spuRecords = spuRecord[]

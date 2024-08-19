@@ -21,14 +21,14 @@
                 placement="bottom"
                 title="主题设置"
                 :width="400"
-                trigger="click"
+                trigger="hover"
             >
                 <template #reference>
                     <el-button :icon="Setting" circle />
                 </template>
                 <el-form>
                     <el-form-item label = "主题颜色">
-                        <el-color-picker v-model="color" show-alpha :predefine="predefineColors" />
+                        <el-color-picker @change = "changeColor" v-model="color" show-alpha :predefine="predefineColors" :teleported = 'false' />
                     </el-form-item>
                     <el-form-item label = "暗黑模式">
                         <el-switch
@@ -114,6 +114,11 @@
     'hsla(209, 100%, 56%, 0.73)',
     '#c7158577',
     ]);
+
+    const changeColor = () => {
+        let el = document.documentElement;
+        el.style.setProperty('--el-color-primary', color.value);
+    }
 
     //暗黑
     let isDark = ref(false);

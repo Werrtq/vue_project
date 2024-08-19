@@ -2,7 +2,6 @@
 import View404 from '../views/404/index.vue'
 import Login from '../views/login/index.vue'
 import HomeView from '../layout/index.vue'
-import component from 'element-plus/es/components/tree-select/src/tree-select-option.mjs'
 
 export const constantRoute = [
     { 

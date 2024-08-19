@@ -1,5 +1,5 @@
 import request from '@/utils/request';
-import { ResponseBody, RequestBodyAddRole, permissionData } from './type';
+import { ResponseBody, RequestBodyAddRole, ResponsePermissionBody } from './type';
 
 enum API{
     GETROLELIST_URL = '/admin/acl/role/',
@@ -14,9 +14,9 @@ export const reqGetRoleList = (pageNo: number, pageLimit: number, keyword: strin
 
 export const reqAddOrUpdateRole = (roleData: RequestBodyAddRole) => {
     if(roleData.id === 0){
-        return  request.post(API.ADDROLE_URL, roleData);
+        return  request.post<any, any>(API.ADDROLE_URL, roleData);
     } else {
-        return  request.put(API.UPDATEROLE_URL, roleData);
+        return  request.put<any, any>(API.UPDATEROLE_URL, roleData);
     }
 
 }
@@ -24,6 +24,6 @@ export const reqAddOrUpdateRole = (roleData: RequestBodyAddRole) => {
 export const reqDeleteRole = (roleId: number) => request.delete<any, any>(API.DELETEROLE_URL+`${roleId}`)
 //export const reqAddRole = (roleData: RequestBodyAddRole) => request.post(API.ADDROLE_URL, roleData)
 
-export const reqGetRolePermission = (roleId: number) => request.get<any, permissionData>(API.GETPERMISSION_URL +  `${roleId}`)
+export const reqGetRolePermission = (roleId: number) => request.get<any, ResponsePermissionBody>(API.GETPERMISSION_URL +  `${roleId}`)
 
 export const reqPostRolePermission = (roleId: number, permissionList: number[]) => request.post<any, any>(API.AGGIGNPERMISSION_URL+`roleId=${roleId}&permissionId=${permissionList}`)

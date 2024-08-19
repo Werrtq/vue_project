@@ -91,7 +91,7 @@
                             </template>
                         </el-table-column>
                         <el-table-column label = '操作'>
-                            <template # = "{row, $index}">
+                            <template # = "{$index}">
                                 <el-button type = "primary" icon = "Delete" size = 'small' @click = "spuParams.spuSaleAttrList.splice($index, 1)"></el-button>
                             </template>
                         </el-table-column>
@@ -108,7 +108,7 @@
 <script setup lang = 'ts'>
     import { ref, onMounted, computed } from 'vue';
     import { reqGetTrademarkList, reqGetSpuDataById, reqGetAllSaleAttrList, reqUpdateOrAddSpu } from '../../../api/product/spu';
-    import type { trademarkList, spuRecord, spuImageList, saleAttrList } from '@/api/product/spu/type'
+    import type { trademarkList, spuRecord, spuImageList, saleAttrList } from '@/api/product/spu/type.ts'
     import { ElMessage, UploadFile, UploadRawFile } from 'element-plus';
 
     let $emit = defineEmits(['turnScene0']);
@@ -124,8 +124,8 @@
         spuName: '',
         tmId: '',
         description: '',
-        spuImageList: '',
-        spuSaleAttrList: ''
+        spuImageList: [],
+        spuSaleAttrList: []
     });
    
     const setTrademarkList = async () => {
@@ -134,7 +134,7 @@
     }
 
     const prepareSpuFormData_Update = async (row: spuRecord) => {
-        let result = await reqGetSpuDataById(row.id);
+        let result = await reqGetSpuDataById((row.id as number));
         if(result.code == 200){
             spuParams.value = result.data;
             console.log(spuParams.value.spuSaleAttrList);

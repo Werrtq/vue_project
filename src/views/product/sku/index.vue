@@ -5,14 +5,14 @@
             <el-table-column label = "名称" prop="skuName"></el-table-column>
             <el-table-column label = "描述" prop="skuDesc"></el-table-column>
             <el-table-column label = "图片">
-                <template #="{row, $index}">
+                <template #="{row}">
                     <img :src="row.skuDefaultImg" alt="" width = '100px' height = '100px'>
                 </template>
             </el-table-column>
             <el-table-column label = "重量" prop="weight"></el-table-column>
             <el-table-column label = "价格" prop="price"></el-table-column>
             <el-table-column label = "操作" width = "220px">
-                <template # = "{row, $index}">
+                <template # = "{row}">
                     <el-button type = "primary" size = "small" :icon = "row.isSale ? 'Bottom' : 'Top'" @click = "changeSaleState(row)"></el-button>
                     <el-button type = "primary" size = "small" icon = "Edit" @click = "edit"></el-button>
                     <el-button type = "primary" size = "small" icon = "InfoFilled" @click = "showDetail(row)"></el-button>
@@ -86,11 +86,12 @@
     import { ref, onMounted } from 'vue';
     import { reqGetSkuListByPage, reqSetSkuOnSale, reqSetSkuCancelSale, reqDeleteSku, reqGetSkuInfo } from '@/api/product/sku/index'
     import { ElMessage } from 'element-plus';
+    import { skuRecords } from '@/api/product/sku/type';
 
     let pageNo = ref<number>(1);
     let limit = ref<number>(7);
     let totalPage = ref<number>(0);
-    let skuList = ref([]);
+    let skuList = ref<skuRecords>([]);
     let table = ref(false);
     let skuInfo = ref<any>({});
 

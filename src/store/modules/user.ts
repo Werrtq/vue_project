@@ -1,7 +1,7 @@
 import { defineStore } from "pinia";
 import { reqLogin, reqUserInfo, reqLogout } from "../../api/user";
 import { constantRoute } from "../../router/routes";
-import type { loginFormdata, userInfoResponesData, loginResponesData } from "../../api/user/type";
+import type { loginFormdata} from "../../api/user/type";
 
 const useUserStore = defineStore('User',{
     state: () => {

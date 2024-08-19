@@ -1,5 +1,5 @@
 <template>
-        <template v-for = "(item, i) in menuList">
+        <template v-for = "item in menuList">
             <template v-if = "!item.children && !item.meta.hidden">
                 <el-menu-item :index = "item.path"  @click = "goRoute">
                     <el-icon>

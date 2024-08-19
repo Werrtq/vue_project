@@ -13,9 +13,9 @@ export const getPermission = () => request.get<any, permissionDataListResponseBo
 
 export const reqAddOrUpdatePermission = (data: addPermissionRequestBody) => {
     if(data.id){
-        return request.put(API.UPDATEPERMISSION_URL, data);
+        return request.put<any, any>(API.UPDATEPERMISSION_URL, data);
     } else {
-        return request.post(API.ADDPERMISSION_URL, data);
+        return request.post<any, any>(API.ADDPERMISSION_URL, data);
     }
 }
 

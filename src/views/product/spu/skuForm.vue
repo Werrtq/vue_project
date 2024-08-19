@@ -45,13 +45,13 @@
                 <el-table :data = "imageList" ref = "imgTableRef" style = "margin: 10px 0px;" border>
                     <el-table-column type = "selection"></el-table-column>
                     <el-table-column label = "图片">
-                        <template # = "{row, $index}">
+                        <template # = "{row}">
                             <img :src = "row.imgUrl" alt = "" width="200px">
                         </template>
                     </el-table-column>
                     <el-table-column label = "名称" prop = "imgName"></el-table-column>
                     <el-table-column label = "操作">
-                        <template # = "{row, $index}">
+                        <template # = "{row}">
                             <el-button type = 'primary' size = "small" @click = "setDefaultImg(row)">设置默认</el-button>
                         </template>
                     </el-table-column>
@@ -88,9 +88,9 @@
     })
 
     const initSkuData = async (id1: number, id2: number, spu: spuRecord) => {
-        let result = await reqGetAttrList(id1, id2, spu.category3Id);
-        let result1 = await reqGetSaleAttrList(spu.id);
-        let result2 = await reqGetSpuImageList(spu.id);
+        let result = await reqGetAttrList(id1, id2, (spu.category3Id as number));
+        let result1 = await reqGetSaleAttrList((spu.id as number));
+        let result2 = await reqGetSpuImageList((spu.id as number));
         platformAttrList.value = result.data;
         saleAttrList.value = result1.data;
         imageList.value = result2.data;

@@ -1,5 +1,5 @@
 export interface loginFormdata{
-    name: string,
+    username: string,
     password: string
 };
 

@@ -5,12 +5,12 @@
             <el-table-column label="序号" width="80px" align="center" type = "index"></el-table-column>
             <el-table-column label="品牌名称" prop = "tmName"></el-table-column>
             <el-table-column label="品牌LOGO">
-                <template # = "{row, $index}">
+                <template # = "{row}">
                     <img :src = "row.logoUrl" style="height: 80px; width: 80px;">
                 </template>
             </el-table-column>
             <el-table-column label="品牌操作">
-                <template #="{row, $index}">
+                <template #="{row}">
                     <el-button type="primary" size = "small" icon = "Edit" @click = "updateTardemark(row)"></el-button>
                     
                     <el-popconfirm title="确定删除？" @confirm = "deleteTrademark(row)">
@@ -159,7 +159,7 @@
         trademarkParams.tmName = '';
     }
 
-    const validatorLogoUrl = (rule: any, value: any, callback: any) => {
+    const validatorLogoUrl = (_rule: any, value: any, callback: any) => {
         if(value){
             callback();
         }else{

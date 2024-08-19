@@ -26,7 +26,7 @@ export const reqGetSpuDataById = (spuId: number) => request.get<any, spuDataResp
 
 export const reqGetAllSaleAttrList = () => request.get<any, allSaleAttrListResponseBody>(API.GETALLSALEATTRLIST)
 
-export const reqUpdateOrAddSpu = (spuBody: spuDataResponseBody) => {
+export const reqUpdateOrAddSpu = (spuBody: any) => {
     if(spuBody.data?.id){
         return request.post<any, any>(API.UPDATESPU_URL, spuBody)
     } else {
